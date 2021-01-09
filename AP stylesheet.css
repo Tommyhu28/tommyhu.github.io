@@ -1,0 +1,160 @@
+body {
+  margin: 5px 2rem;
+  background-color: rgb(182, 30, 30); 
+  background-image: linear-gradient(to top right, rgb(98, 73, 189,1), rgb(191, 104, 241,0));
+  background-repeat: no-repeat;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.navbar {
+  width:100%;
+}
+
+.navitems:hover {
+  border-radius: 3px;
+  background-color:rgba(224, 201, 160, 0.822);
+}
+
+.navitems, .navitems:hover, .navitems a {
+  transition: background-color 0.3s ease-in-out, 
+    border-color 0.3s ease-in-out, 
+    box-shadow 0.15s ease-in-out, 
+    -webkit-box-shadow 0.15s ease-in-out;
+}
+
+.navitems, navitems a {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 23px;
+  color:white;
+  display: inline-block;
+  padding: 10px;
+}
+
+/* to remove default link style */
+.navitems a {
+  color:white;
+  text-decoration: none;
+}
+
+.navitems:hover .dropdown {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: 23px;
+  width: 500px; 
+  background-color:rgba(224, 200, 160, 0.2);
+  display: block;
+  position: absolute;
+  padding-left:0.5rem;
+  min-width: 4rem;
+  margin-top: 11px;
+  left: 1.7rem;
+  top: 42px;
+}
+
+.dropdown {
+  display: none;
+  border:1px solid rgba(216, 40, 40, 0.15);
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem;
+  position: absolute;
+}
+
+.dropdown-item {
+  transition: background-color 0.2s ease-in-out, 
+    border-color 0.2s ease-in-out, 
+    box-shadow 0.15s ease-in-out, 
+    -webkit-box-shadow 0.15s ease-in-out;
+  padding: 0.3em 0.3rem;
+  display: block;
+}
+
+.dropdown-item:hover {
+  background-color:rgb(116, 56, 33);
+  width:100%;
+  position: relative;
+  padding-left: 10px;
+  border-radius: 0.25rem;
+}
+
+.content {
+  color: white;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  margin: auto;
+  text-align: left;
+  max-width: 1200px;
+  font-size: 20px;
+}
+
+h1 {
+  font-size: 46px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  padding-top: 10px; /*Interference */
+}
+
+h2 {
+  font-size: 30px;
+  font-family: sans-serif;
+}
+
+table {
+  background-color: white;
+  border-radius: 1rem;
+  border-collapse:separate;
+  border-spacing: 0px;
+}
+
+tr:hover {
+  background-color: lightslategray;
+}
+
+/*
+td:hover {
+  background-color: lightslategray;
+}
+*/
+
+td,th {
+  border-left:solid black 1px;
+  border-top:solid black 1px;
+}
+
+th {
+  font-size: 25px;
+  text-align: center;
+  background-color: lightgray;
+  color: black;
+  padding: 12px;
+}
+
+/* th:first-child is top left */
+
+th:first-child {
+  border-radius: 1rem 0 0 0;
+}
+
+/* th:last-child is top right */
+th:last-child {
+  border-radius: 0 1rem 0 0;
+}
+
+/* td:first-child is the imperfect answer for bottom left, tr:last-child makes it perfect */
+
+tr:last-child td:first-child {
+  border-radius: 0 0 0 1rem;
+}
+
+/* td:last-child is bottom right */
+
+td:last-child {
+  border-radius: 0 0 1rem 0;
+}
+
+td {
+  background-color: white;
+  color: black;
+  padding: 12px;
+  text-align: left;
+}
+
