@@ -207,7 +207,7 @@ th {
   text-align: center;
   background-color: rgb(83, 64, 87);
   color: white;
-  padding: 12px;
+  padding: 12px 20px;
 }
 
 /* th:first-child is top left */
