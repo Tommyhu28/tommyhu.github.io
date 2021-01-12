@@ -1,6 +1,24 @@
+
+/* Issues:
+1. tr {} not working
+2. Left menu bar, how to contract it the way it expands?
+3. Putting a logo in a website
+5. While inspecting styles, crossed-out tags and attributes?
+    How to know what caused it to get crossed out?
+
+TODO:
+1. fix navbar hover transition color
+*/
+
 body {
+  margin: 1px auto;
   background-color: rgb(182, 30, 30); 
-  background-image: linear-gradient(to top right, rgb(98, 73, 189,1), rgb(191, 104, 241,0));
+  /* below background setup is referenced to fix background image split when zooming out */
+  background: rgb(182, 30, 30) linear-gradient(to top right, rgb(98, 73, 189,1), rgb(191, 104, 241,0)) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 a:hover {
@@ -9,17 +27,16 @@ a:hover {
 
 #navbar {
   color: white;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  margin:0 auto;
-  max-width: 1400px;
+  font-family: 'Clarkson',Helvetica,sans-serif;
+  max-width: 100%;
   font-size: 25px;
-  border-bottom: 3px solid black;
   padding-bottom: 10px;
-  background-color:  rgba(63, 10, 45);
+  background-color: none;
+  /*background-color:  rgba(63, 10, 45);*/
 }
 
 .navbar-item {
-  padding: 10px 0 0px 20px;
+  padding: 10px 0 0px 70px;
 }
 
 
@@ -27,13 +44,18 @@ a:hover {
 .sticky {
   position: fixed;
   top: 0;
-  left: 60px;
   width: 100%;
-  
+  background-color: rgb(243, 208, 177);
+  color: black;
+  transition: background-color 0.3s ease-in-out, 
+    border-color 0.3s ease-in-out, 
+    box-shadow 0.3s ease-in-out, 
+    -webkit-box-shadow 0.3s ease-in-out;
+
 }
 
 .sticky + .content {
-  padding-top: 85px;
+  padding-top: 88px;
 }
 
 /* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
@@ -48,7 +70,8 @@ a:hover {
 }
 
 #navbar a:hover {
-  border-radius: 3px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
   background-color:rgba(224, 201, 160, 0.822);
   transition: background-color 0.3s ease-in-out, 
     border-color 0.3s ease-in-out, 
@@ -58,14 +81,21 @@ a:hover {
 
 #navbar a:hover .dropdown {
   width: 373px; 
-  background-color:rgba(224, 200, 160, 0.2);
-  display: block;
+  background-color: rgb(243, 208, 177);
+  display: inline-block;
   position: absolute;
   padding-left:0.5rem;
   min-width: 4rem;
-  margin-top: 19px;
-  left: 3.7rem;
+  margin-top: 12px;
+  left: 4.8rem;
   top: 47px;
+  border:none;
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+  transition: background-color 0.3s ease-in-out, 
+    border-color 0.3s ease-in-out, 
+    box-shadow 0.15s ease-in-out, 
+    -webkit-box-shadow 0.15s ease-in-out;
 }
 
 .dropdown {
@@ -82,21 +112,51 @@ a:hover {
     box-shadow 0.15s ease-in-out, 
     -webkit-box-shadow 0.15s ease-in-out;
   padding: 0.5em 0.5rem;
+  color:black;
   display: block;
 }
 
 .dropdown-item:hover {
-  background-color:rgb(116, 56, 33);
+  background-color:rgb(235, 167, 141);
   width:100%;
   position: relative;
   padding-left: 10px;
   border-radius: 0.25rem;
 }
 
+.arrow {
+  display:none;
+}
+
+.dropdown-item:hover .arrow {
+  display: inline-block;
+  animation-name: arrowmoveright;
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;
+  
+}
+
+@keyframes arrowmoveright {
+  from {transform: translate(0,0);}
+  to {transform: translate(30%,0);}
+}
+
+/*
+@media screen and (max-width: 600px) {
+  #navbar a:hover .dropdown {
+    float:left;
+    display: block;
+    padding-left: 20px;
+
+  }
+}
+*/
 
 .content {
   color: white;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: 'Clarkson',Helvetica,sans-serif;
   margin: auto;
   text-align: left;
   max-width: 1200px;
@@ -109,15 +169,22 @@ h1 {
   padding-top: 10px; /*Interference */
 }
 
-h2 {
-  font-size: 30px;
+.foreword ul li {
+  font-size: 20px;
 }
 
+h2 {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+/* Start of table-related styling */
 table {
   background-color: white;
   border-radius: 1rem;
   border-collapse:separate;
   border-spacing: 0px;
+  overflow: hidden;
 }
 
 tr:hover {
@@ -172,36 +239,37 @@ td {
   text-align: left;
 }
 
+/* End of table styling */
 
 .popup {
   position: fixed; 
   top: 50%; 
   left: 0; 
-  transform: translate(-80%, 0); 
+  transform: translate(-30%,0); 
   height: 200px; 
-  width: 100px; 
-  background-color: rgb(16, 83, 109);
-
+  width: 35px; 
+  background-color: rgb(27, 170, 226);
+  border-radius: 0 0.5rem 0.5rem 0;
 }
 
 .popup:hover {
-  height:300px;
-  width: 400px;
+  height: 200px;
+  width: 130px;
   transition: width 1s, height 1s;
   transition-timing-function: ease;
-
 }
 
-/*
-.popup:hover .sidebar {
-  background-color: lightblue;
-  height: 200px;
-  width: 100px;
-  top: 30%;
-  border-radius: 0.5rem;
-  border: 4px solid black;
+.top-half {
+  height: 100px;
 }
-*/
+
+.bot-half {
+  height: 100px;
+}
+
+.popup:hover .top-half {
+  border-bottom: 1px double black;
+}
 
 .sidebar-content {
   text-align:center;
@@ -212,46 +280,53 @@ td {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.sidebar-content .top-half {
-  height: 1rem;
-  position: relative;
-  padding-bottom: 5rem;
-  border-bottom: 1px double black;
-}
-
-.bot-half {
-  height: 103px;
-}
-
 .sidebar .top-half:hover {
-  background-color: rgb(65, 95, 107);
-  border-top-left-radius: 0.5rem;
+  background-color: rgb(85, 74, 11);
   border-top-right-radius: 0.5rem;
   transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out, -webkit-box-shadow 0.5s ease-in-out;
 }
 
-@keyframes textmovedown {
-  from {top: 0px}
-  to {color:white; top:40px;}
+.sidebar .bot-half:hover {
+  background-color: rgb(126, 13, 126);
+  border-bottom-right-radius: 0.5rem;
+  transition: background-color 0.5s ease-in-out, 
+    border-color 0.5s ease-in-out, 
+    box-shadow 0.5s ease-in-out, 
+    -webkit-box-shadow 0.5s ease-in-out;
 }
 
-.top-half:hover .animation-text, .bot-half:hover .animation-text{
-  position: relative;
-  animation-name: textmovedown;
+.animation-text {
+  color:black;
+  transform: translate(-80%,0);
+  display: none;
+
+}
+
+.popup:hover .top-half .animation-text, .popup:hover .bot-half .animation-text{
+  margin:auto;
+  display: inline-block;
   animation-duration: 1.2s;
   animation-iteration-count: 1;
   animation-timing-function: ease;
   animation-fill-mode: forwards;
 }
 
-.sidebar .bot-half:hover {
-  background-color: rgb(71, 35, 82);
-  border-bottom-left-radius: 0.5rem;
-  border-bottom-right-radius: 0.5rem;
-  transition: background-color 0.5s ease-in-out, 
-    border-color 0.5s ease-in-out, 
-    box-shadow 0.5s ease-in-out, 
-    -webkit-box-shadow 0.5s ease-in-out;
+.popup:hover .top-half .animation-text{
+  animation-name: textslide-top;
+}
+
+.popup:hover .bot-half .animation-text {
+  animation-name: textslide-bot;
+}
+
+@keyframes textslide-top {
+  0% {transform: translate(-80%,0);}
+  100% {color:white;font-size: 20px;transform: translate(25%,110%); border-bottom: 1px double black;}
+}
+
+@keyframes textslide-bot {
+  0% {color:black;transform: translate(-80%,0);}
+  100% {color:white;font-size: 25px;transform: translate(30%,70%); border-bottom: 1px double black;}
 }
 
 
