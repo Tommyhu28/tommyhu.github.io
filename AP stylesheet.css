@@ -3,7 +3,7 @@
 1. tr {} not working
 2. Left menu bar, how to contract it the way it expands?
 3. Putting a logo in a website
-5. While inspecting styles, crossed-out tags and attributes?
+4. While inspecting styles, crossed-out tags and attributes?
     How to know what caused it to get crossed out?
 
 TODO:
@@ -170,7 +170,7 @@ h1 {
   padding-top: 10px; /*Interference */
 }
 
-.foreword ul li {
+ul li {
   font-size: 20px;
 }
 
@@ -186,10 +186,11 @@ table {
   border-collapse:separate;
   border-spacing: 0px;
   overflow: hidden;
+  margin-bottom: 5rem;
 }
 
-tr:hover {
-  background-color: lightslategray;
+tr:hover td{
+  background-color: rgba(149, 183, 216, 0.486);
 }
 
 /*
@@ -242,36 +243,6 @@ td {
 
 /* End of table styling */
 
-.popup {
-  position: fixed; 
-  top: 50%; 
-  left: 0; 
-  transform: translate(-30%,0); 
-  height: 200px; 
-  width: 35px; 
-  background-color: rgb(27, 170, 226);
-  border-radius: 0 0.5rem 0.5rem 0;
-}
-
-.popup:hover {
-  height: 200px;
-  width: 130px;
-  transition: width 1s, height 1s;
-  transition-timing-function: ease;
-}
-
-.top-half {
-  height: 100px;
-}
-
-.bot-half {
-  height: 100px;
-}
-
-.popup:hover .top-half {
-  border-bottom: 1px double black;
-}
-
 .sidebar-content {
   text-align:center;
 }
@@ -281,26 +252,26 @@ td {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.sidebar .top-half:hover {
-  background-color: rgb(85, 74, 11);
-  border-top-right-radius: 0.5rem;
-  transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out, -webkit-box-shadow 0.5s ease-in-out;
+.popup {
+  position: fixed; 
+  top: 50%; 
+  left: 0; 
+  transform: translate(-30%,0); 
+  height: 200px; 
+  width: 35px; 
+  background-color: rgb(27, 170, 226);
+  border-radius: 0 0.5rem 0.5rem 0;
+  transition: width 1s, height 1s;
+  transition-timing-function: ease;
 }
 
-.sidebar .bot-half:hover {
-  background-color: rgb(126, 13, 126);
-  border-bottom-right-radius: 0.5rem;
-  transition: background-color 0.5s ease-in-out, 
-    border-color 0.5s ease-in-out, 
-    box-shadow 0.5s ease-in-out, 
-    -webkit-box-shadow 0.5s ease-in-out;
+.popup:hover {
+  height: 200px;
+  width: 130px;
 }
 
-.animation-text {
-  color:black;
-  transform: translate(-80%,0);
-  display: none;
-
+.popup:hover .top-half {
+  border-bottom: 1px double black;
 }
 
 .popup:hover .top-half .animation-text, .popup:hover .bot-half .animation-text{
@@ -312,6 +283,8 @@ td {
   animation-fill-mode: forwards;
 }
 
+
+
 .popup:hover .top-half .animation-text{
   animation-name: textslide-top;
 }
@@ -320,15 +293,70 @@ td {
   animation-name: textslide-bot;
 }
 
-@keyframes textslide-top {
-  0% {transform: translate(-80%,0);}
-  100% {color:white;font-size: 20px;transform: translate(25%,110%); border-bottom: 1px double black;}
+
+.animation-text {
+  color: black;
+  transform: translate(-80%,0);
+  display: none;
 }
 
-@keyframes textslide-bot {
-  0% {color:black;transform: translate(-80%,0);}
-  100% {color:white;font-size: 25px;transform: translate(30%,70%); border-bottom: 1px double black;}
+
+
+.top-half, .bot-half {
+  height: 100px;
 }
+
+
+.top-half:hover {
+  background-color: rgb(85, 74, 11);
+  border-top-right-radius: 0.5rem;
+  transition: background-color 0.5s ease-in-out, border-color 0.5s ease-in-out, box-shadow 0.5s ease-in-out, -webkit-box-shadow 0.5s ease-in-out;
+}
+
+.bot-half:hover {
+  background-color: rgb(126, 13, 126);
+  border-bottom-right-radius: 0.5rem;
+  transition: background-color 0.5s ease-in-out, 
+    border-color 0.5s ease-in-out, 
+    box-shadow 0.5s ease-in-out, 
+    -webkit-box-shadow 0.5s ease-in-out;
+}
+
+
+@keyframes textslide-top {
+  from {transform: translate(-80%,0);}
+  to {color:white;opacity: 1;font-size: 20px;transform: translate(25%,110%); border-bottom: 1px double black;}
+}
+
+
+@keyframes textslide-bot {
+  from {color:black;transform: translate(-80%,0);}
+  to {color:white;opacity: 1;font-size: 25px;transform: translate(30%,70%); border-bottom: 1px double black;}
+}
+
+
+
+
+/*
+1. mouse hovers over base class (popup)
+2. base class expands; animation-text performs transition
+3. mouse leaves the area
+4. animation-text and base class perform returning transition
+
+
+*user mouses over popup area
+if (mouse hovers popup area)
+    execute animation;
+    replace animation with returning animation;
+  
+*mouse is out of area
+*executes returning animation.
+
+*/
+
+
+
+
 
 
 
