@@ -3,9 +3,6 @@ a "choose your own adventure" game. What do you do?
 
 1. Spend the next 5 minutes planning a story for the game.
 2. Check your phone to see if there are any unread messages.
-3. Inadvertently spit out a few curse words because your brain isn't
-   configured creatively.
-4. Promptly leave the desk and go out for some fresh air.
 
 If chose 1: Spend the next 5 minutes planning a story for the game.
 2 minutes into the thinking, you suddenly realized that you can write
@@ -125,4 +122,20 @@ out of nowhere you spoke: "glad you made it to the end." END
 
 if choose 2. Be kind to yourself and allow yourself some respite.
 
-A brief period of rest. You came back an hour later but still finds no
+You got the work done after the break. Wise choice. END
+
+back to story planning:
+if choose 2: nah that's lame.
+
+You tossed the idea out of your mind, what are you thinking now?
+
+1. Write about a casual island survival story.
+2. Write about a rags to riches story.
+
+If choose 1:
+
+1. Nothing spectacular: a few options and a short story, you did it. END
+
+If choose 2:
+2. Took a little imagination and little research to make it plausible. But 
+you got it done.
