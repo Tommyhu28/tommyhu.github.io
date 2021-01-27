@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% include 'showcase_box.html' %}
+
+
+  {% for section in posts %}
+    {% set post=section['post'] %}
+    {% set likes=get_stats(post) %}
+    {% set replies=get_replies(post)[0] %}
+    {% set responders=get_replies(post)[1] %}
+    {% set x=get_replies(post)[2] %}
+    {% set date=date_format(x) %}
+    <div class="box">
+      <article class="media">
+        <div class="media-left">
+          <figure class="image is-64x64">
+            <img src="{{ url_for('static', filename=bio['name']+'.png') }}" alt="Image">
+          </figure>
+        </div>
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <a ><strong>{{ bio["name"] }}</strong></a> 
+              <small class="tag">@{{ bio["handle"] }}</small>
+              <small class="date">{{ date }}</small>
+              <br>
+              {{ post }}
+            </p>
+          </div>
+          <span class="interactive">
+            <a class="like-section">
+              <span class="like-icon">&#128157</span>
+              <span class="likes">{{ likes }}</span>
+            </a>
+          
+            <a class="comment-section">
+              <span class="comment-icon">&#128172</span>
+              <span class="comments">{{ replies|length }}</span>
+            </a>
+          </span>
+        </div>
+      </article>
+    </div>
+    <div class="drop-down-box">
+    {% set res=[] %}
+    {% for reply in replies %} <!--I need count to go over 1-->
+      {% set responder=responders[res|length] %}
+        <article class="media">
+          <div class="media-content">
+            <div class="content">
+              <p>
+                <a href="{{ url_for('profile', name=responder) }} "><strong>{{ responder }}</strong></a> <small>@{{ get_cat(responder)["handle"] }}</small> <small>31m</small>
+                <br>
+                {{ reply }}
+              </p>
+            </div>
+          </div>
+        </article>
+      {% set __ = res.append(1) %}
+    {% endfor %}
+      </div>
+  {% endfor %}
+
+  <script>
+    $('.comment-section').click(function(e) {
+      var closest=$(this).closest('.box').next('.drop-down-box');
+      if(closest) {closest.slideToggle();}
+    });
+      
+  </script>
+
+{% endblock %}
