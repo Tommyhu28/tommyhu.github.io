@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<table class="table is-hoverable is-bordered">
+  <thead>
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Tag
+      </th>
+      <th>
+        Age
+      </th>
+      <th>
+        Favorite food
+      </th>
+      <th>
+        Intro
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for section in members %}
+      {% set cat=get_cat(section[0]) %}
+      {% set name=cat[0] %}
+      {% set tag=cat[1] %}
+      {% set food=cat[2] %}
+      {% set age=cat[3] %}
+      {% set intro=cat[4] %}
+      <tr>
+        <td>
+          {{ name }}
+        </td>
+        <td>
+          {{ tag }}
+        </td>
+        <td>
+          {{ age }}
+        </td>
+        <td>
+          {{ food }}
+        </td>
+        <td>
+          {{ intro }}
+        </td>
+      </tr>
+
+    {% endfor %}
+  </tbody>
+  <!-- <tfoot>
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Tag
+      </th>
+      <th>
+        Age
+      </th>
+      <th>
+        Favorite food
+      </th>
+      <th>
+        Intro
+      </th>
+    </tr>
+  </tfoot> -->
+
+</table>
+
+
+
+{% endblock %}

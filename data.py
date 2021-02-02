@@ -1,155 +1,76 @@
 import datetime
-member = [
-  {
-    "name":"Tray",
-    "handle":"BigT",
-    "favorite food":"donuts",
-    "age":2,
-    "intro": "The hardest thing in the world is to get up from bed."
-  },
-  {
-    "name":"Jippy",
-    "handle":"Jip",
-    "favorite food":"Apple",
-    "age":6,
-    "intro": "An apple a day keep the dogtor away."
-  },
-  {
-    "name":"Cloud",
-    "handle":"CC",
-    "favorite food":"Cake",
-    "age":3,
-    "intro": "I can always eat."
-  },
-  {
-    "name":"Haha",
-    "handle":"HHHH",
-    "favorite food":"Lime",
-    "age":5,
-    "intro": "You are a bore."
-  },
-  {
-    "name":"Juice",
-    "handle":"Juice",
-    "favorite food":"Chicken",
-    "age":2,
-    "intro": "Don't mess with me."
-  }
-]
+from openpyxl import load_workbook
 
-posts=[
-  {
-    "name":"Tray",
-    "post":["Today was a nice day.", "I ate an apple today."],
-    "likes":[2,3]
-  },
-  {
-    "name":"Jippy",
-    "post":["I ate my dad's ceral today.","Is he mad at me?"],
-    "likes":[1,4],
-  },
-  {
-    "name":"Juice",
-    "post":["Can't live without juice!", "Hey where did my juice go?"],
-    "likes":[3,2],
-  },
-  {
-    "name":"Haha",
-    "post":["Imagine a dog with an unbrella on his head!", "Can someone laugh at my joke please?"],
-    "likes":[2,3],
-  },
-  {
-    "name":"Cloud",
-    "post":["Time to get some sleep!","What y'all doing?"],
-    "likes":[5,0],
-  }
-]
+path='static/member.xlsx'
+workbook = load_workbook(filename=path)
+sheet = workbook.active
+member=workbook.get_sheet_by_name('Member')
+post=workbook.get_sheet_by_name('Posts')
 
-post=[
-  {
-    "author":"Tray",
-    "post":"Today was a nice day.",
-    "reply":["Yep.","Agree."],
-    "responder":["Cloud","Juice"],
-    "time": "09 21 2020"
-  },
-  {
-    "author":"Tray",
-    "post":"I ate an apple today.",
-    "reply":["Good","Awesome","Great"],
-    "responder":["Cloud","Haha","Jippy"],
-    "time":"04 02 2020"
-  },
-  {
-    "author":"Jippy",
-    "post": "I ate my dad's ceral today.",
-    "reply": ["Yep","Agree","So what?","ok","Hmm"],
-    "responder": ["Juice","Jippy","Cloud","Tray","Tray"],
-    "time":"08 22 2020"
-  },
-  {
-    "author":"Jippy",
-    "post": "Is he mad at me?",
-    "reply": ["He is."],
-    "responder": ["Tray"],
-    "time":"09 12 2020"
-  },
-  {
-    "author":"Juice",
-    "post": "Can't live without juice!",
-    "reply": ["Yep","Agree","So what?","ok"],
-    "responder": ["Juice","Tray","Jippy","Cloud"],
-    "time":"04 29 2020"
-  },
-  {
-    "author":"Juice",
-    "post": "Hey where did my juice go?",
-    "reply": ["Hmm","Jesus","What?","Are you kidding me?"],
-    "responder": ["Cloud","Jippy","juice","Tray","Cloud"],
-    "time":"07 02 2020"
-  },
-  {
-    "author":"Haha",
-    "post": "Imagine a dog with an unbrella on his head!",
-    "reply": ["Yep","Agree","So what?","ok"],
-    "responder": ["Tray","Jippy","Cloud","Juice"],
-    "time":"02 04 2020"
-  },
-  {
-    "author":"Haha",
-    "post": "Can someone laugh at my joke please?",
-    "reply": ["Hmm","Jesus","Are you ok?"],
-    "responder": ["Haha","Tray","Cloud"],
-    "time":"08 30 2020"
-  },
-  {
-    "author":"Cloud",
-    "post": "Time to get some sleep!",
-    "reply": ["Yep","Agree","So what?","ok","Hmm"],
-    "responder": ["Tray","Tray","Juice","Jippy","Cloud"],
-    "time":"11 21 2020"
-  },
-  {
-    "author":"Cloud",
-    "post": "What y'all doing?",
-    "reply": ["Nothing"],
-    "responder": ["Tray"],
-    "time":"11 22 2020"
-  }
-]
+member_list=[]
+for row in member.iter_rows(min_row=2,max_row=6,max_col=5,values_only=True):
+  member_list.append(row)
 
-# my_dates = ['11 21 2020', '11 22 2020', '02 04 2020', '04 29 2020']
-# my_dates.sort(key=lambda date: datetime.datetime.strptime(date, '%m %d %Y'),reverse=True)
-# print(my_dates)
+post_list=[]
+for row in post.iter_rows(min_row=2,values_only=True):
+  post_list.append(row)
 
-# obtain likes
-def get_stats(post):
-  for section in posts:
-    ind=0
-    for item in section["post"]:
-      if item==post:
-        return section["likes"][ind]
-      ind+=1
+ten_posts=[]
+for row in post.iter_rows(min_row=2,max_row=11,values_only=True):
+  ten_posts.append(row)
+
+# print(member_list[1])
+# print(post_list[0])
+# print(post_list)
+
+def sort_find(collection):
+  list=[]
+  sorted_posts=[]
+  for section in collection:
+    list.append(section[5]) # hard-coded index for date
+  list.sort(key=lambda date: datetime.datetime.strptime(date, '%m %d %Y'),reverse=True)
+  for item in list:
+    for part in collection:
+      if part[5]==item:
+        sorted_posts.append(part)
+  return sorted_posts
+
+
+def organize(collection):
+  final=[]
+  for section in post_list:
+    temp=[]
+    temp.append(section[0])
+    temp.append(section[1])
+    temp.append(section[2].split('|'))
+    temp.append(section[3].split('|'))
+    temp.append(section[4].split('|'))
+    temp.append(section[5])
+    final.append(temp)
+
+  return sort_find(final)
+
+organized_posts=organize(post_list)
+organized_ten=organize(ten_posts)
+
+# to obtain a particular user's post info
+def find_post(name):
+  result=[]
+  for section in organized_posts:
+    if section[0]==name: # hard-coded
+      result.append(section)
+
+  return result
+
+# successfully extracted and categorized each part of a post into sections below:
+# rtr=find_post('Cloud')
+# print(rtr)
+
+def get_members():
+  list=[]
+  for section in member_list:
+    list.append(section)
+  return list
 
 # for displaying date
 def date_format(value, format='medium'):
@@ -161,75 +82,7 @@ def date_format(value, format='medium'):
 
 # uses a name to return a cat's info
 def get_cat(input):
-  for cat in member:
-    if cat['name'] == input:
-      return cat
+  for section in member_list:
+    if section[0]==input:
+      return section
   return None
-
-# obtains all posts from a specific user
-def get_post(name): 
-  list = []
-  sorted_posts=[]
-  for section in post:
-    if section["author"]==name:
-      list.append(section['time'])
-  list.sort(key=lambda date: datetime.datetime.strptime(date, '%m %d %Y'),reverse=True)
-  for item in list:
-    for part in post:
-      if part['time']==item:
-        sorted_posts.append(part)
-  return sorted_posts
-
-# sort all posts by date
-def sort_posts():
-  list=[]
-  sorted_posts=[]
-  for section in post:
-    list.append(section["time"])
-  list.sort(key=lambda date: datetime.datetime.strptime(date, '%m %d %Y'),reverse=True)
-  for item in list:
-    for part in post:
-      if part['time']==item:
-        sorted_posts.append(part)
-  return sorted_posts
-
-
-# rtr=sort_posts()
-# for item in rtr:
-#   print(item)
-
-# obtains replies and responders from each post
-def get_replies(item):
-  for section in post:
-    if section['post']==item:
-      return section['reply'],section['responder'],section['time']
-
-
-#member_replies= [
-#   {
-#     "name":"Tray",
-#     "post":[["I ate my dad's cereal today."],["Can't live without juice!"]],
-#     "reply":[["Agree"],["Yep"]]
-#   },
-#   {
-#     "name":"Haha",
-#     "post":[["Time to get some sleep!"],["Can someone laugh at my joke please?"]],
-#     "reply":[["Jesus"],["ok"]]
-#   },
-#   {
-#     "name":"Jippy",
-#     "post":[["Imagine a dog with an unbrella on his head!"],["Hey where did my juice go?"]],
-#     "reply":[["So what?"],["Hmm"]]
-#   },
-#   {
-#     "name":"Juice",
-#     "post":[["Imagine a dog with an unbrella on his head!"],["I ate an apple today."]],
-#     "reply":[["Are you ok?"],["Wow."]]
-#   },
-#   {
-#     "name":"Cloud",
-#     "post":[["Can't live without juice!"],["I ate my dad's ceral today."]],
-#     "reply":[["Hmm"],["Jesus"]]
-#   }
-
-# ]

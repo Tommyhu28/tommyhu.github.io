@@ -1,11 +1,12 @@
 
-{% for each_cluster in posts %}
-  {% set name=each_cluster['author'] %}
-  {% set each_post=each_cluster['post'] %}
-  {% set likes=get_stats(each_post) %}
-  {% set replies=get_replies(each_post)[0] %}
-  {% set responders=get_replies(each_post)[1] %}
-  {% set x=get_replies(each_post)[2] %}
+{% for section in posts %}
+  {% set index=[] %}
+  {% set name=section[0] %}
+  {% set post=section[1] %}
+  {% set replies=section[2] %}
+  {% set responders=section[3] %}
+  {% set likers=section[4] %}
+  {% set x=section[5] %}
   {% set date=date_format(x) %}
     <div class="box">
       <article class="media">
@@ -18,16 +19,42 @@
           <div class="content">
             <p>
               <a href="{{ url_for('profile', name=name) }} "><strong>{{ name }}</strong></a> 
-              <small class="tag">@{{ get_cat(name)["handle"] }}</small>
+              <small class="tag">@{{ get_cat(name)[1] }}</small>
               <small class="date">{{ date }}</small>
               <br>
-              {{ each_post }}
+              {{ post }}
             </p>
           </div>
           <span class="interactive">
             <a class="like-section">
               <span class="like-icon">&#128157</span>
-              <span class="likes">{{ likes }}</span>
+              <span class="likes">{{ likers|length }}
+              <div class="modal" >
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                {% for liker in likers %}
+                  <div class="box">
+                    <article class="media">
+                      <div class="media-left">
+                        <figure class="image is-64x64">
+                          <img src="{{ url_for('static', filename=liker+'.png') }}" alt="Image" style="width: 65px;height: 65px;">
+                        </figure>
+                      </div>
+                      <div class="media-content">
+                        <div class="content">
+                          <p>
+                            <a href="{{ url_for('profile', name=liker) }} "><strong>{{ liker }}</strong></a> 
+                            <small class="tag">@{{ get_cat(liker)[1] }}</small>
+                          </p>
+                        </div>
+                        <!--On the right add a heart icon?-->
+                      </div>
+                    </article>
+                  </div>
+                {% endfor %}
+                </div>
+              </div>
+              </span>
             </a>
           
             <a class="comment-section">
@@ -39,15 +66,16 @@
       </article>
       
     </div>
+    
     <div class="drop-down-box">
     {% set res=[] %}
     {% for reply in replies %}
-    {% set responder=responders[res|length] %}
+      {% set responder=responders[res|length] %}
       <article class="media">
         <div class="media-content">
           <div class="content">
             <p>
-              <a href="{{ url_for('profile', name=responder) }} "><strong>{{ responder }}</strong></a> <small>@{{ get_cat(responder)["handle"] }}</small> <small>31m</small>
+              <a href="{{ url_for('profile', name=responder) }} "><strong>{{ responder }}</strong></a> <small>@{{ get_cat(responder)[1] }}</small> <small>31m</small>
               <br>
               {{ reply }}
             </p>
@@ -57,13 +85,26 @@
       {% set __ = res.append(1) %}
     {% endfor %}
     </div>
-
+    
+    
 {% endfor %}
 
 
 <script>
-  $('.comment-section').click(function(e) {
+  $('.comment-section').click(function() {
     var closest=$(this).closest('.box').next('.drop-down-box');
     if(closest) {closest.slideToggle();}
   });
+
+  $('.like-section').click(function() {
+    var element=$(this).next(".modal");
+    $(element).toggleClass('is-active');
+  });
+
+  $('.modal-background').click(function() {
+    var element=$(this).parent().parent();
+    $(element).toggleClass('is-active');
+
+  });
+
 </script>

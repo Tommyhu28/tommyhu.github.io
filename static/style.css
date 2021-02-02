@@ -21,3 +21,38 @@
 .tag {
   max-width: 50px;
 }
+
+
+
+.modal-content {
+  height: 500px;
+  width: 400px;
+  background-color: antiquewhite;
+  position: fixed;
+  margin:auto;
+  border-radius: 0.25rem;
+}
+
+.modal .media {
+  margin:auto;
+  position: relative;
+}
+
+@media only screen and (max-width: 600px) {
+  .modal-content {
+    width: 300px;
+  }
+}
+
+a .modal-background {
+  cursor: context-menu;
+}
+
+.table th {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.table td {
+  font-size: 20px;
+}
